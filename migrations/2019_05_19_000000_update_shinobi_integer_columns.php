@@ -6,8 +6,16 @@ use Illuminate\Database\Migrations\Migration;
 
 class UpdateShinobiIntegerColumns extends Migration
 {
+    public function __construct()
+    {
+        // Register ENUM type
+        DB::getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
+    }
+    
     public function up()
     {
+        Schema::getConnection()->getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
+
         Schema::table('roles', function (Blueprint $table) {
             $table->bigIncrements('id')->change();
         });
