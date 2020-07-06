@@ -16,6 +16,8 @@ class UpdateShinobiIntegerColumns extends Migration
     {
         Schema::getConnection()->getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
 
+        Schema::disableForeignKeyConstraints();
+
         Schema::table('roles', function (Blueprint $table) {
             $table->bigIncrements('id')->change();
         });
@@ -41,6 +43,8 @@ class UpdateShinobiIntegerColumns extends Migration
             $table->unsignedBigInteger('permission_id')->change();
             $table->unsignedBigInteger('user_id')->change();
         });
+        
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
